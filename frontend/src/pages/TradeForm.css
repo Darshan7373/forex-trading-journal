@@ -1,0 +1,229 @@
+.trade-form-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   ADD NEW TRADE - TEXT READABILITY (SCOPED)
+   ========================================================= */
+
+.trade-form-container .form-header h1,
+.trade-form-container .add-trade-title {
+  color: #f1f5ff;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.trade-form-container .form-section h3,
+.trade-form-container .form-section-title {
+  color: #e8edff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.trade-form-container .form-section h3::before,
+.trade-form-container .form-section-title::before {
+  content: "";
+  width: 3px;
+  height: 14px;
+  margin-right: 10px;
+  background: #4f6bff;
+  border-radius: 2px;
+}
+
+.trade-form-container label,
+.trade-form-container .form-label {
+  color: #b6c0e5;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.trade-form-container label span,
+.trade-form-container .form-label span {
+  color: #5eead4;
+}
+
+.trade-form-container input,
+.trade-form-container select,
+.trade-form-container textarea {
+  color: #f0f4ff;
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.trade-form-container input::placeholder,
+.trade-form-container textarea::placeholder {
+  color: #7f8ac2;
+  opacity: 1;
+}
+
+.trade-form-container input:disabled,
+.trade-form-container select:disabled,
+.trade-form-container textarea:disabled {
+  color: #9aa6d9;
+}
+
+.trade-form-container select {
+  color: #eef2ff;
+  font-weight: 500;
+}
+
+.trade-form-container .helper-text,
+.trade-form-container .form-helper {
+  color: #8b95c9;
+  font-size: 12.5px;
+  margin-top: 4px;
+}
+
+.trade-form-container .form-error {
+  color: #fca5a5;
+  font-size: 12.5px;
+}
+
+.trade-form-container .form-success {
+  color: #6ee7b7;
+  font-size: 12.5px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.trade-form {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  border: 1px solid var(--border);
+}
+
+.form-section {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.form-section:last-of-type {
+  border-bottom: none;
+}
+
+.form-section h3 {
+  color: var(--text-heading);
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+
+.ai-feedback-display {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-top: 2rem;
+  border: 2px solid var(--primary);
+  animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback-score {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+}
+
+.score-label {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.score-value {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.score-value.score-0,
+.score-value.score-1,
+.score-value.score-2 {
+  color: var(--danger);
+}
+
+.score-value.score-3 {
+  color: var(--warning);
+}
+
+.score-value.score-4,
+.score-value.score-5 {
+  color: var(--success);
+}
+
+.feedback-section {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.feedback-section.mistakes {
+  border-left: 4px solid var(--danger);
+}
+
+.feedback-section.suggestion {
+  border-left: 4px solid var(--primary);
+}
+
+.feedback-section h3 {
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.feedback-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.feedback-section li {
+  padding: 0.5rem 0;
+  color: var(--text-secondary);
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.feedback-section li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.feedback-meta {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+
+.redirect-message {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
