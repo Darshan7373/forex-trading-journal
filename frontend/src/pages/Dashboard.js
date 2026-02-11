@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { analyticsAPI } from '../services/api';
 import { toast } from 'react-toastify';
@@ -10,11 +10,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [reviewPeriod, setReviewPeriod] = useState('weekly');
 
-  useEffect(() => {
-    loadDashboard();
-  }, [reviewPeriod]);
-
-  const loadDashboard = async () => {
+  const loadDashboard = useCallback(async () => {
     try {
       setLoading(true);
       const [statsRes, reviewRes] = await Promise.all([
@@ -30,7 +26,11 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [reviewPeriod]);
+
+  useEffect(() => {
+    loadDashboard();
+  }, [loadDashboard]);
 
   if (loading) {
     return (

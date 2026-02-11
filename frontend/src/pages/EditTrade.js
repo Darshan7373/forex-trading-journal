@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { tradeAPI } from '../services/api';
 import { toast } from 'react-toastify';
@@ -9,11 +9,7 @@ const EditTrade = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState(null);
 
-  useEffect(() => {
-    loadTrade();
-  }, [id]);
-
-  const loadTrade = async () => {
+  const loadTrade = useCallback(async () => {
     try {
       const response = await tradeAPI.getById(id);
       setFormData({
@@ -24,7 +20,11 @@ const EditTrade = () => {
       toast.error('Failed to load trade');
       navigate('/trades');
     }
-  };
+  }, [id, navigate]);
+
+  useEffect(() => {
+    loadTrade();
+  }, [loadTrade]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
