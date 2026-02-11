@@ -18,18 +18,16 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(localStorage.getItem('token'));
 
-  // Configure axios defaults
-  useEffect(() => {
-    if (token && user === null) {
-      // Token exists but user is null - restore session from localStorage
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      loadUser();
-    } else {
-      // After login (both token and user set) or after logout - stop loading
-      setLoading(false);
-    }
-  }, [token, user]);
+  // Define logout first (needed by loadUser)
+  const logout = useCallback(() => {
+    localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
+    setToken(null);
+    setUser(null);
+    toast.info('Logged out successfully');
+  }, []);
 
+  // Define loadUser before useEffect (depends on logout)
   const loadUser = useCallback(async () => {
     try {
       const response = await authAPI.getProfile();
@@ -40,7 +38,19 @@ export const AuthProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [logout]);
+
+  // Configure axios defaults
+  useEffect(() => {
+    if (token && user === null) {
+      // Token exists but user is null - restore session from localStorage
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      loadUser();
+    } else {
+      // After login (both token and user set) or after logout - stop loading
+      setLoading(false);
+    }
+  }, [token, user, loadUser]);
 
   const login = async (email, password) => {
     try {
@@ -82,14 +92,6 @@ export const AuthProvider = ({ children }) => {
       toast.error(message);
       return false;
     }
-  };
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
-    setToken(null);
-    setUser(null);
-    toast.info('Logged out successfully');
   };
 
   const value = {
