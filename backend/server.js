@@ -3,7 +3,6 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
-const { Pool } = require('pg');
 require('dotenv').config();
 
 // Import database configuration
@@ -32,14 +31,6 @@ app.use(cors({
 // Body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Additional pool using DATABASE_URL for simple status checks
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
@@ -82,22 +73,6 @@ app.get('/api/status', (req, res) => {
   res.send('API Running Successfully');
 });
 
-// Pool health endpoint requested
-app.get('/api/pool-health', async (req, res) => {
-  try {
-    await pool.query('SELECT 1');
-    res.status(200).json({
-      status: 'OK',
-      database: 'PostgreSQL - Pool Connected'
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: 'ERROR',
-      database: 'PostgreSQL - Pool Disconnected'
-    });
-  }
-});
-
 // Health check endpoint
 app.get('/api/health', async (req, res) => {
   try {
@@ -130,8 +105,7 @@ app.get('/', (req, res) => {
       trades: '/api/trades',
       analytics: '/api/analytics',
       health: '/api/health',
-      status: '/api/status',
-      poolHealth: '/api/pool-health'
+      status: '/api/status'
     }
   });
 });
