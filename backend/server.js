@@ -22,9 +22,22 @@ const app = express();
 // Security headers
 app.use(helmet());
 
-// CORS configuration
+// CORS configuration - supports both development and production
+const allowedOrigins = [
+  'http://localhost:3000', // Local development
+  process.env.FRONTEND_URL, // Environment variable for production
+  'https://forex-trading-journal-rfue4jcu3-darshans-projects-1289424d.vercel.app' // Vercel URL
+].filter(Boolean); // Remove undefined/null values
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
